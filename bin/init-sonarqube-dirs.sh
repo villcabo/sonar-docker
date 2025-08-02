@@ -79,8 +79,17 @@ for dir in "$SONAR_DATA_DIR" "$SONAR_LOGS_DIR" "$SONAR_EXTENSIONS_DIR"; do
     fi
 done
 
-info "🔐 Ajustando permisos..."
-chmod -R 755 "$SONAR_DIR" || error_exit "Error al ajustar permisos"
+info "🔐 Ajustando permisos y propietario..."
+# Aplicar propietario 1000:1000 (usuario por defecto de SonarQube en el contenedor)
+if command -v sudo >/dev/null 2>&1; then
+    sudo chown -R 1000:1000 "$SONAR_DIR" || error_exit "Error al cambiar el propietario de los directorios"
+else
+    chown -R 1000:1000 "$SONAR_DIR" 2>/dev/null || \
+        echo -e "${YELLOW}⚠️  Advertencia: No se pudo cambiar el propietario. Es posible que necesites ejecutar con sudo.${NC}"
+fi
+
+# Aplicar permisos 700
+chmod -R 700 "$SONAR_DIR" || error_exit "Error al ajustar permisos"
 
 # Verificar que los directorios tienen los permisos correctos
 for dir in "$SONAR_DATA_DIR" "$SONAR_LOGS_DIR" "$SONAR_EXTENSIONS_DIR"; do
