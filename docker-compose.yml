@@ -5,6 +5,8 @@ services:
     image: sonarqube:${SONAR_VERSION:-latest}
     container_name: sonarqube
     restart: unless-stopped
+    ports:
+      - "${SONAR_PORT:-127.0.0.1:9000}:9000"
     environment:
       SONAR_JDBC_URL: ${SONAR_JDBC_URL}
       SONAR_JDBC_USERNAME: ${SONAR_JDBC_USERNAME}

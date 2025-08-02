@@ -52,23 +52,22 @@ This project sets up and runs SonarQube in a Docker container with a production-
 
 ### Environment Variables
 
-You can configure SonarQube using the following environment variables in the `.env` file:
+Copy `.env.example` to `.env` and update the values as needed:
 
-```dotenv
-# SonarQube version
-SONAR_VERSION=latest
+```bash
+cp .env.example .env
+nano .env  # or use your preferred text editor
+```
 
-# Directory configuration (default values)
-SONAR_DIR=./sonar-data
+### Port Configuration
 
-# Database configuration
-SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonar
-SONAR_JDBC_USERNAME=sonar
-SONAR_JDBC_PASSWORD=sonar
+By default, SonarQube runs on port 9000 and is only accessible from localhost. To change this, modify the `SONAR_PORT` variable in your `.env` file:
 
-# SonarQube configuration
-SONAR_WEB_JAVAOPTS=-Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError
-SONAR_SEARCH_JAVAOPTS=-Xmx512m -Xms512m -XX:+HeapDumpOnOutOfMemoryError
+```env
+# Format: [HOST:]PORT:PORT
+SONAR_PORT=127.0.0.1:9000:9000  # Default: localhost only
+# OR
+SONAR_PORT=9000:9000  # Accessible from all network interfaces
 ```
 
 ### Directory Structure
