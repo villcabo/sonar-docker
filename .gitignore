@@ -89,7 +89,7 @@ Desktop.ini
 *~
 .merge_file*
 
-.env*
+.env
 
 # Custom gatewayui
 gatewayui/*.custom.conf
